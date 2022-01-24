@@ -104,3 +104,11 @@ input[type="checkbox"] {
 #clipboard:hover {
   color: orange;
 }
+
+@media (max-width: 400px) {
+  .result-container {
+    width: 100%;
+    font-size: 15px;
+  }
+}
+
