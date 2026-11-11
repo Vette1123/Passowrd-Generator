@@ -15,13 +15,13 @@ character classes to include, generate, copy.
 
 ## Stack
 
-Plain HTML, CSS and JavaScript. No dependencies, no build step — a password
-tool is precisely the wrong place to pull in a supply chain.
+Plain HTML, CSS and JavaScript. No dependencies and no build step, since a password
+tool should not pull in a supply chain.
 
 ## How generation works
 
 The obvious implementation draws every character from one merged pool, which
-can return a password satisfying **none** of the classes you asked for. This
+can return a password satisfying none of the classes you asked for. This
 one walks the selected types in a cycle instead, appending one character from
 each per pass, then trims to the requested length:
 
@@ -49,8 +49,7 @@ Every enabled class is therefore guaranteed to appear, which is what satisfies
 
 ## Known limitations
 
-Being honest about these, because they matter more in a security tool than
-anywhere else:
+These matter more in a security tool than in most projects:
 
 - **The classes land in a fixed repeating pattern.** Because the cycle order
   never varies, a four-class password is always upper, lower, number, symbol,
@@ -64,10 +63,10 @@ anywhere else:
 - **Truncation can drop a guaranteed class.** `slice(0, length)` cuts the last
   pass short, so a length that is not a multiple of the number of enabled
   classes can lose one — length 5 with four classes yields upper, lower,
-  number, symbol, upper, and no second symbol was ever the problem, but the
-  guarantee only holds when `length >= typesCount`.
-- **Copy uses `document.execCommand('copy')`** with a hidden textarea — the
-  approach that predated the async Clipboard API, now deprecated. `navigator.
+  number, symbol, upper, which still has every class. The guarantee only holds
+  when `length >= typesCount`.
+- **Copy uses `document.execCommand('copy')`** with a hidden textarea. That
+  approach predates the async Clipboard API and is now deprecated. `navigator.
   clipboard.writeText()` is the modern equivalent.
 
 ## Running locally
